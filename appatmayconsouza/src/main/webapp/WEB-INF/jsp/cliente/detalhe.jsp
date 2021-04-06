@@ -36,15 +36,6 @@
 		</form>
 		<form class="form-signin" action="/cliente/incluir" method="post">
 
-	  	 <div class="form-group">
-	      <label>Informe o Usuario: </label>
-	      <select class="form-control" name="usuario.id">
-	      	<c:forEach var="u" items="${usuarios}">
-	      	<option value="${u.id}">${u.nome}</option>
-	      	</c:forEach>
-	      </select>
-	    </div>
-
 			<div class="form-group">
 				<label>NOME DO CLIENTE:  </label> <input type="text"
 					class="form-control" id="nome"
@@ -99,7 +90,7 @@
                                   </c:if></td>
 
 								<td class="text-center"><a class="btn btn-danger btn-xs"
-									href="/venda/${v.id}/excluir"">excluir</a></td>
+									href="/venda/${v.id}/excluir">excluir</a></td>
 						</tr>
 					</c:forEach>
 				</tbody>

@@ -11,25 +11,23 @@ import org.springframework.web.bind.annotation.SessionAttribute;
 import br.edu.infnet.appatmayconsouza.model.negocio.Usuario;
 import br.edu.infnet.appatmayconsouza.model.negocio.Venda;
 import br.edu.infnet.appatmayconsouza.model.service.ClienteService;
-import br.edu.infnet.appatmayconsouza.model.service.UsuarioService;
 import br.edu.infnet.appatmayconsouza.model.service.VendaService;
 
 @Controller
+
 public class VendaController {
+	
 	
 	@Autowired 
 	private VendaService vendaService;
 	@Autowired
 	private ClienteService clienteService;
-	@Autowired
-	private UsuarioService usuarioService;
 	
 	@GetMapping(value="/venda")
-	public String showDetalhe(Model model){
+	public String showDetalhe(Model model, @SessionAttribute("user") Usuario usuario){
 			
 			model.addAttribute("lista", vendaService.obterLista());
-			model.addAttribute("clientes", clienteService.obterLista());
-			model.addAttribute("usuarios", usuarioService.obterLista());
+			model.addAttribute("clientes", clienteService.obterLista(usuario));
 					
 			vendaService.obterLista();
 			

@@ -21,6 +21,12 @@ public class Venda {
 		private String descricao;
 		private boolean site;
 		private String data;
+		@OneToOne(cascade = CascadeType.DETACH)
+		@JoinColumn(name="idCliente")
+		private Cliente cliente;
+		@OneToOne
+		@JoinColumn(name="idUsuario")
+		private Usuario usuario;
 		
 		public boolean isSite() {
 			return site;
@@ -34,13 +40,7 @@ public class Venda {
 		public void setData(String data) {
 			this.data = data;
 		}
-		@OneToOne(cascade = CascadeType.DETACH)
-		@JoinColumn(name="idCliente")
-		private Cliente cliente;
-		@OneToOne
-		@JoinColumn(name="idUsuario")
-		private Usuario usuario;
-		
+
 		public int getId() {
 			return id;	
 		}

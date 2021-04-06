@@ -64,7 +64,44 @@
 					</div>
 				</div>
 			</form>
-
 		</div>
+		
+		<c:if test="${not empty lista}">
+						<table class="table table-striped custab form-signin-heading">
+					<h1 class="form-signin-heading">LISTA DE CLIENTES</h1>
+				<thead>
+					<tr>
+						<th>Nome</th>
+						<th>Email</th>
+						<th>Git</th>
+													<th class="text-center">Ação</th>
+					</tr>
+				</thead>
+				<tbody>
+					<c:forEach var="u" items="${lista}">
+						<tr>
+							<td>${u.id}</td>
+							<td>${u.nome}</td>
+							<td>${u.git}</td>							
+								<td class="text-center"><a class="btn btn-danger btn-xs"
+									href="/usuario/${u.id}/excluir">excluir</a></td>
+						</tr>
+					</c:forEach>
+				</tbody>
+			</table>
+		</c:if>
+
+		<c:if test="${empty lista}">
+			<p>Não existem clientes cadastrados no sistema.</p>
+		</c:if>
+
+		<c:if test="${not empty msg}">
+			<div class="alert alert-danger">
+				<strong>Impossível excluir. </strong> ${msg}
+			</div>
+		</c:if>
+		
+		
+		
 </body>
 </html>

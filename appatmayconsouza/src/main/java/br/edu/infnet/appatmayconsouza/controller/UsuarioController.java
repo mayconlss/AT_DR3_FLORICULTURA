@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.SessionAttribute;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
 import br.edu.infnet.appatmayconsouza.model.negocio.Usuario;
@@ -36,7 +37,7 @@ public class UsuarioController {
 	}
 	
 	@GetMapping(value = "/usuario")
-	public String showDetalhe(Model model) {
+	public String showDetalhe(Model model, @SessionAttribute("user") Usuario usuario) {
 		
 		model.addAttribute("lista", usuarioService.obterLista());
 	
@@ -52,9 +53,14 @@ public class UsuarioController {
 	}
 	
 	@GetMapping(value = "/usuario/{id}/excluir")
-	public String excluir(@PathVariable Integer id) {
+	public String excluir(Model model, @PathVariable Integer id, @SessionAttribute("user") Usuario usuario) {
 		
-		usuarioService.excluir(id);
+		try {
+			usuarioService.excluir(id);
+		} catch (Exception e) {
+			model.addAttribute("msg", "Cliente com vínculo de venda");
+			return showDetalhe(model, usuario);
+		}
 		
 		return "redirect:/usuario";
 	}

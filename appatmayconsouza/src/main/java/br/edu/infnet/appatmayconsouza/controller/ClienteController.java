@@ -14,6 +14,7 @@ import br.edu.infnet.appatmayconsouza.model.service.ClienteService;
 import br.edu.infnet.appatmayconsouza.model.service.UsuarioService;
 
 @Controller
+
 public class ClienteController {
 	@Autowired
 	ClienteService clienteService;
@@ -21,21 +22,19 @@ public class ClienteController {
 	UsuarioService usuarioService;	
 
 	@GetMapping(value = "/cliente")
-	public String showDetalhe(Model model) {
+	public String showDetalhe(Model model, @SessionAttribute("user") Usuario usuario) {
 
-		model.addAttribute("lista", clienteService.obterLista());
-		model.addAttribute("usuarios", usuarioService.obterLista());
+		model.addAttribute("lista", clienteService.obterLista(usuario));
 		
-		clienteService.obterLista();
-
+		
 		return "cliente/detalhe";
 	}
 
 	@PostMapping(value = "cliente/incluir")
-	public String incluir(Cliente cliente) {
-
+	public String incluir(Cliente cliente,  @SessionAttribute("user") Usuario usuario) {
+		cliente.setUsuario(usuario);
 		clienteService.incluir(cliente);
-
+		
 		return "redirect:/cliente";
 	}
 
@@ -45,7 +44,7 @@ public class ClienteController {
 			clienteService.excluir(id);
 		} catch (Exception e) {
 			model.addAttribute("msg", "Cliente com vínculo de venda");
-			return showDetalhe(model);
+			return showDetalhe(model, usuario);
 		}
 		return "redirect:/cliente";
 	}

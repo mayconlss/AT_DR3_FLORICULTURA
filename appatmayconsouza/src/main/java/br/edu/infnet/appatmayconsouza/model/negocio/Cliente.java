@@ -4,11 +4,14 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
 @Table(name = "TCliente")
 public class Cliente {
+
 	
 	@Id
 	@GeneratedValue(strategy =GenerationType.IDENTITY )
@@ -18,7 +21,17 @@ public class Cliente {
 	private String nome;
 	private int idade;
 	private boolean alergico;
+	@ManyToOne
+	@JoinColumn(name = "idUsuario")
+	private Usuario usuario;
 	
+	
+	public Usuario getUsuario() {
+		return usuario;
+	}
+	public void setUsuario(Usuario usuario) {
+		this.usuario = usuario;
+	}
 	public int getIdade() {
 		return idade;
 	}
